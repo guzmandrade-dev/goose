@@ -31,6 +31,7 @@ use super::{
     provider_registry::ProviderRegistry,
     snowflake_def::SnowflakeProviderDef,
     tetrate::TetrateProvider,
+    vibe_acp::VibeAcpProvider,
     xai::XaiProvider,
     xai_oauth::XaiOAuthProvider,
 };
@@ -179,6 +180,10 @@ async fn init_registry() -> RwLock<ProviderRegistry> {
         registry.register::<SnowflakeProviderDef>(false);
         registry
             .register_with_inventory::<TetrateProvider>(true, Some(registrations::refresh_only()));
+        registry.register_with_inventory::<VibeAcpProvider>(
+            false,
+            Some(registrations::vibe_acp_inventory()),
+        );
         registry.register_with_inventory::<XaiProvider>(false, Some(registrations::refresh_only()));
         registry.register_with_inventory::<XaiOAuthProvider>(
             true,
